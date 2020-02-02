@@ -1,0 +1,519 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>xCharts · Example</title>
+  <script src="../../lib/jquery-2.2.1.min.js"></script>
+  <link href="../../lib/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+  <script src="../../lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+  <link href="../../lib/codemirror-5.12/lib/codemirror.css" rel="stylesheet">
+  <script src="../../lib/codemirror-5.12/lib/codemirror.js"></script>
+  <script src="../../lib/codemirror-5.12/mode/javascript/javascript.js"></script>
+  <script src="../../lib/d3/d3.js"></script>
+  <script src="../../dist/xCharts.js"></script>
+  <link href="../../dist/xCharts.css" rel="stylesheet">
+  <link href="./examples.css" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button class="navbar-toggle collapsed" aria-expanded="false" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">xCharts</a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="../../index.html">首页</a></li>
+        <li><a href="../documents/api.html">API文档</a></li>
+        <li class="active"><a href="javascript:void(0)">实例</a></li>
+      </ul>
+    </div>
+  </nav>
+  <ul class="nav nav-pills nav-stacked" id="chart-nav">
+    <li role="presentation">
+      <a class="chartsType" href="javascript:void(0)">折线图</a>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <a class="chartLink" href="#line-singleAxis">单轴折线图</a>
+        </li>
+        <li class="list-group-item">
+          <a class="chartLink" href="#line-multipleAxis">多轴折线图</a>
+        </li>
+        <li class="list-group-item">
+          <a class="chartLink" href="#line-area">面积图</a>
+        </li>
+        <li class="list-group-item">
+          <a class="chartLink" href="#line-stack">堆积图</a>
+        </li>
+        <li class="list-group-item">
+          <a class="chartLink" href="#line-areaAndStack">面积堆积图</a>
+        </li>
+      </ul>
+    </li>
+    <li role="presentation">
+      <a class="chartsType" href="javascript:void(0)">柱状图</a>
+      <ul class="list-group close">
+        <li class="list-group-item">
+          <a class="chartLink" href="#bar-normal">标准柱状图</a>
+        </li>
+        <li class="list-group-item">
+          <a class="chartLink" href="#bar-stack">堆积柱状图</a>
+        </li>
+      </ul>
+    </li>
+    <li role="presentation">
+      <a class="chartsType" href="javascript:void(0)">饼图</a>
+      <ul class="list-group close">
+        <li class="list-group-item">
+          <a class="chartLink" href="#pie-normal">标准饼图</a>
+        </li>
+        <li class="list-group-item">
+          <a class="chartLink" href="#pie-loop">环形图</a>
+        </li>
+      </ul>
+    </li>
+    <li role="presentation">
+      <a class="chartsType" href="javascript:void(0)">散点图</a>
+      <ul class="list-group close">
+        <li class="list-group-item">
+          <a class="chartLink" href="#scatter">标准散点图</a>
+        </li>
+        <li class="list-group-item">
+          <a class="chartLink" href="#bubble">气泡图</a>
+        </li>
+      </ul>
+    </li>
+    <li role="presentation">
+      <a class="chartsType" href="javascript:void(0)">漏斗图</a>
+      <ul class="list-group close">
+        <li class="list-group-item">
+          <a class="chartLink" href="#funnel-normal">标准漏斗图</a>
+        </li>
+        <li class="list-group-item">
+          <a class="chartLink" href="#funnel-pyramid">金字塔图</a>
+        </li>
+      </ul>
+    </li>
+    <li role="presentation">
+      <a class="chartsType" href="javascript:void(0)">雷达图</a>
+      <ul class="list-group close">
+        <li class="list-group-item">
+          <a class="chartLink" href="#radar-normal">标准雷达图</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <div class="clearfix" id="main-container">
+    <div id="codeWrap">
+      <div class="clearfix" id="codeHeader">
+        <button class="btn btn-default pull-right" id="refresh" type="button">刷新</button>
+      </div>
+      <div id="code">
+        <textarea name="codeText" id="codeText" style="display: none;"></textarea>
+        <div class="CodeMirror cm-s-default">
+          <div style="left: 143.19px; top: 624px; width: 3px; height: 0px; overflow: hidden; position: relative;"><textarea tabindex="0" style="padding: 0px; width: 1px; height: 1em; position: absolute;" spellcheck="false" wrap="off"
+              autocorrect="off" autocapitalize="off"></textarea></div>
+          <div class="CodeMirror-vscrollbar" style="bottom: 0px; display: block;" cm-not-content="true">
+            <div style="height: 888px; min-width: 1px;"></div>
+          </div>
+          <div class="CodeMirror-hscrollbar" style="left: 30px; right: 17px;" cm-not-content="true">
+            <div style="width: 0px; height: 100%; min-height: 1px;"></div>
+          </div>
+          <div class="CodeMirror-scrollbar-filler" style="width: 17px; height: 17px;" cm-not-content="true"></div>
+          <div class="CodeMirror-gutter-filler" cm-not-content="true"></div>
+          <div tabindex="-1" class="CodeMirror-scroll" draggable="true">
+            <div class="CodeMirror-sizer" style="padding-right: 17px; padding-bottom: 0px; margin-bottom: -17px; margin-left: 30px; border-right-width: 13px; min-height: 888px; min-width: 452.2px;">
+              <div style="top: 0px; position: relative;">
+                <div class="CodeMirror-lines">
+                  <div style="position: relative;">
+                    <div class="CodeMirror-measure"></div>
+                    <div class="CodeMirror-measure">
+                      <pre
+                        class="CodeMirror-line"><span>                <span class="cm-keyword">return</span> <span class="cm-string">'&lt;p&gt;'</span><span class="cm-operator">+</span><span class="cm-variable-2">name</span> <span class="cm-operator">+</span> <span class="cm-string">':&amp;nbsp;'</span> <span class="cm-operator">+</span> <span class="cm-variable-2">data</span><span class="cm-operator">+</span><span class="cm-string">'%&lt;/p&gt;'</span>;</span></pre>
+                    </div>
+                    <div style="position: relative; z-index: 1;"></div>
+                    <div class="CodeMirror-cursors">
+                      <div class="CodeMirror-cursor" style="left: 113.19px; top: 620px; height: 20px;">&nbsp;</div>
+                    </div>
+                    <div class="CodeMirror-code">
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span><span class="cm-variable">option</span> <span class="cm-operator">=</span> {</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">2</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>    <span class="cm-property">title</span>: {</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">3</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>        <span class="cm-property">text</span>: <span class="cm-string">'单轴折线图-示例'</span></span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">4</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>    },</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">5</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>    <span class="cm-property">legend</span>: {</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">6</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>        <span class="cm-property">data</span>: [<span class="cm-string">'网易'</span>,<span class="cm-string">'腾讯'</span>],</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">7</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>        <span class="cm-property">x</span>: <span class="cm-string">'center'</span></span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">8</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>    },</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">9</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>    <span class="cm-property">tooltip</span>: {</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">10</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>        <span class="cm-property">trigger</span>: <span class="cm-string">'axis'</span></span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">11</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>    },</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">12</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>    <span class="cm-property">xAxis</span>: [</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">13</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>        {</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">14</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>            <span class="cm-property">type</span>: <span class="cm-string">'category'</span>,</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">15</div>
+                        </div>
+                        <pre
+                          class=" CodeMirror-line "><span>            <span class="cm-property">data</span>: [<span class="cm-string">'一'</span>, <span class="cm-string">'二'</span>, <span class="cm-string">'三'</span>, <span class="cm-string">'四'</span>, <span class="cm-string">'五'</span>, <span class="cm-string">'日'</span>],</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">16</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>            <span class="cm-property">tickFormat</span>: <span class="cm-keyword">function</span>(<span class="cm-def">data</span>) {</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">17</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>                <span class="cm-keyword">return</span> <span class="cm-string">'周'</span><span class="cm-operator">+</span><span class="cm-variable-2">data</span>;</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">18</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>            }</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">19</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>        }</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">20</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>    ],</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">21</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>    <span class="cm-property">yAxis</span>: [</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">22</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>        {</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">23</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>            <span class="cm-property">type</span>: <span class="cm-string">'value'</span></span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">24</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>        }</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">25</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>    ],</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">26</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>    <span class="cm-property">resize</span>: {</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">27</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>        <span class="cm-property">enable</span>: <span class="cm-atom">true</span></span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">28</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>    },</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">29</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>    <span class="cm-property">animation</span>: {</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">30</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>        <span class="cm-property">enable</span>: <span class="cm-atom">true</span></span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">31</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>    },</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">32</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>    <span class="cm-property">series</span>: [</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">33</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>        {</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">34</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>            <span class="cm-property">type</span>: <span class="cm-string">'line'</span>,</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">35</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>            <span class="cm-property">name</span>: <span class="cm-string">'网易'</span>,</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">36</div>
+                        </div>
+                        <pre
+                          class=" CodeMirror-line "><span>            <span class="cm-property">data</span>: [<span class="cm-number">100</span>,<span class="cm-number">230</span>,<span class="cm-number">500</span>,<span class="cm-number">160</span>,<span class="cm-number">402</span>,<span class="cm-number">340</span>,<span class="cm-number">380</span>]</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">37</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>        },</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">38</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>        {</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">39</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>            <span class="cm-property">type</span>: <span class="cm-string">'line'</span>,</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">40</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>            <span class="cm-property">name</span>: <span class="cm-string">'腾讯'</span>,</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">41</div>
+                        </div>
+                        <pre
+                          class=" CodeMirror-line "><span>            <span class="cm-property">data</span>: [<span class="cm-number">300</span>,<span class="cm-number">450</span>,<span class="cm-number">347</span>,<span class="cm-number">792</span>,<span class="cm-number">325</span>,<span class="cm-number">683</span>,<span class="cm-number">123</span>]</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">42</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>        }</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">43</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>    ]</span></pre>
+                      </div>
+                      <div style="position: relative;">
+                        <div class="CodeMirror-gutter-wrapper" style="left: -30px;">
+                          <div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">44</div>
+                        </div>
+                        <pre class=" CodeMirror-line "><span>};</span></pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="top: 888px; width: 1px; height: 13px; border-bottom-color: transparent; border-bottom-width: 0px; border-bottom-style: solid; position: absolute;"></div>
+            <div class="CodeMirror-gutters" style="height: 901px;">
+              <div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="chartWrap">
+      <div class="xc-container" xcharts-id="8c04ptt2lrp3"><svg xmlns="http://www.w3.org/2000/svg" class="xc-svg" width="1019" height="801">
+          <g class="xc-main" transform="translate(33 41)">
+            <g class="xc-axis xAxis xAxis-0" font-family="sans-serif" font-size="10" fill="none" stroke="#000" text-anchor="middle" transform="translate(0 700)">
+              <path class="domain" stroke="#000" d="M 0.5 0 V 0.5 H 971.5 V 0" />
+              <g class="tick" opacity="1" transform="">
+                <line opacity="0" x1="0.5" x2="0.5" y2="0" /><text fill="#000" x="0.5" y="10" dy="0.71em">周一</text></g>
+              <g class="tick" opacity="1" transform="translate(194.2)">
+                <line opacity="0.2" stroke="#a2a2a2" x1="0.5" x2="0.5" y2="0" /><text fill="#000" x="0.5" y="10" dy="0.71em">周二</text></g>
+              <g class="tick" opacity="1" transform="translate(388.4)">
+                <line opacity="0.2" stroke="#a2a2a2" x1="0.5" x2="0.5" y2="0" /><text fill="#000" x="0.5" y="10" dy="0.71em">周三</text></g>
+              <g class="tick" opacity="1" transform="translate(582.6)">
+                <line opacity="0.2" stroke="#a2a2a2" x1="0.5" x2="0.5" y2="0" /><text fill="#000" x="0.5" y="10" dy="0.71em">周四</text></g>
+              <g class="tick" opacity="1" transform="translate(776.8)">
+                <line opacity="0.2" stroke="#a2a2a2" x1="0.5" x2="0.5" y2="0" /><text fill="#000" x="0.5" y="10" dy="0.71em">周五</text></g>
+              <g class="tick" opacity="1" transform="translate(971)">
+                <line opacity="0.2" stroke="#a2a2a2" x1="0.5" x2="0.5" y2="0" /><text fill="#000" x="0.5" y="10" dy="0.71em">周日</text></g>
+            </g>
+            <g class="xc-axis yAxis yAxis-0" font-family="sans-serif" font-size="10" fill="none" stroke="#000" text-anchor="end" transform="translate(0)">
+              <path class="domain" stroke="#000" d="M 0 700.5 H 0.5 V 0.5 H 0" />
+              <g class="tick" opacity="1" transform="translate(0 700)">
+                <line opacity="0" y1="0.5" x2="971" y2="0.5" /><text fill="#000" x="-3" y="0.5" dy="0.32em">100</text></g>
+              <g class="tick" opacity="1" transform="translate(0 600)">
+                <line opacity="0.2" stroke="#a2a2a2" y1="0.5" x2="971" y2="0.5" /><text fill="#000" x="-3" y="0.5" dy="0.32em">200</text></g>
+              <g class="tick" opacity="1" transform="translate(0 500)">
+                <line opacity="0.2" stroke="#a2a2a2" y1="0.5" x2="971" y2="0.5" /><text fill="#000" x="-3" y="0.5" dy="0.32em">300</text></g>
+              <g class="tick" opacity="1" transform="translate(0 400)">
+                <line opacity="0.2" stroke="#a2a2a2" y1="0.5" x2="971" y2="0.5" /><text fill="#000" x="-3" y="0.5" dy="0.32em">400</text></g>
+              <g class="tick" opacity="1" transform="translate(0 300)">
+                <line opacity="0.2" stroke="#a2a2a2" y1="0.5" x2="971" y2="0.5" /><text fill="#000" x="-3" y="0.5" dy="0.32em">500</text></g>
+              <g class="tick" opacity="1" transform="translate(0 200)">
+                <line opacity="0.2" stroke="#a2a2a2" y1="0.5" x2="971" y2="0.5" /><text fill="#000" x="-3" y="0.5" dy="0.32em">600</text></g>
+              <g class="tick" opacity="1" transform="translate(0 100)">
+                <line opacity="0.2" stroke="#a2a2a2" y1="0.5" x2="971" y2="0.5" /><text fill="#000" x="-3" y="0.5" dy="0.32em">700</text></g>
+              <g class="tick" opacity="1" transform="">
+                <line opacity="0.2" stroke="#a2a2a2" y1="0.5" x2="971" y2="0.5" /><text fill="#000" x="-3" y="0.5" dy="0.32em">800</text></g>
+            </g>
+            <g class="xc-area-group">
+              <path class="xc-line-area-path" id="xc-line-area-path-id29-0" style="transition:opacity 250ms linear; opacity: 0.3;" fill="#2ec7c9" stroke="none" d="" />
+              <path class="xc-line-area-path" id="xc-line-area-path-id29-1" style="transition:opacity 250ms linear; opacity: 0.3;" fill="#b6a2de" stroke="none" d="" />
+            </g>
+            <g class="xc-line-group">
+              <path class="xc-line-path" id="xc-line-path-id29-0" style="transition:opacity 250ms linear; opacity: 1;" fill="none" stroke="#2ec7c9" stroke-width="2"
+                d="M 0 700 C 64.7333 668.333 129.467 636.667 194.2 570 C 258.933 503.333 323.667 300 388.4 300 C 453.133 300 517.867 640 582.6 640 C 647.333 640 712.067 398 776.8 398 C 841.533 398 906.267 460 971 460" />
+              <path class="xc-line-path" id="xc-line-path-id29-1" style="transition:opacity 250ms linear; opacity: 1;" fill="none" stroke="#b6a2de" stroke-width="2"
+                d="M 0 500 C 64.7333 425 129.467 350 194.2 350 C 258.933 350 323.667 453 388.4 453 C 453.133 453 517.867 8 582.6 8 C 647.333 8 712.067 475 776.8 475 C 841.533 475 906.267 117 971 117" />
+            </g>
+            <g class="xc-circle-group" id="xc-circle-group-id29-0" fill="#2ec7c9">
+              <circle class="xc-point xc-point-0" style="transition:opacity 250ms linear; opacity: 1;" cx="0" cy="700" r="5" />
+              <circle class="xc-point xc-point-1" style="transition:opacity 250ms linear; opacity: 1;" cx="194.2" cy="570" r="5" />
+              <circle class="xc-point xc-point-2" style="transition:opacity 250ms linear; opacity: 1;" cx="388.4" cy="300" r="5" />
+              <circle class="xc-point xc-point-3" style="transition:opacity 250ms linear; opacity: 1;" cx="582.6" cy="640" r="5" />
+              <circle class="xc-point xc-point-4" style="transition:opacity 250ms linear; opacity: 1;" cx="776.8" cy="398" r="5" />
+              <circle class="xc-point xc-point-5" style="transition:opacity 250ms linear; opacity: 1;" cx="971" cy="460" r="6" />
+              <circle class="xc-point xc-point-6" style="transition:opacity 250ms linear; display: none; opacity: 1;" cx="undefined" cy="420" r="5" />
+            </g>
+            <g class="xc-circle-group" id="xc-circle-group-id29-1" fill="#b6a2de">
+              <circle class="xc-point xc-point-0" style="transition:opacity 250ms linear; opacity: 1;" cx="0" cy="500" r="5" />
+              <circle class="xc-point xc-point-1" style="transition:opacity 250ms linear; opacity: 1;" cx="194.2" cy="350" r="5" />
+              <circle class="xc-point xc-point-2" style="transition:opacity 250ms linear; opacity: 1;" cx="388.4" cy="453" r="5" />
+              <circle class="xc-point xc-point-3" style="transition:opacity 250ms linear; opacity: 1;" cx="582.6" cy="8" r="5" />
+              <circle class="xc-point xc-point-4" style="transition:opacity 250ms linear; opacity: 1;" cx="776.8" cy="475" r="5" />
+              <circle class="xc-point xc-point-5" style="transition:opacity 250ms linear; opacity: 1;" cx="971" cy="117" r="6" />
+              <circle class="xc-point xc-point-6" style="transition:opacity 250ms linear; display: none; opacity: 1;" cx="undefined" cy="677" r="5" />
+            </g>
+            <line class="xc-tooltip-line" opacity="0" stroke="#008acd" stroke-width="2" x1="971" y1="0" x2="971" y2="700" />
+          </g><text class="xc-title">
+            <tspan class="xc-title-text" font-size="14" fill="#000" text-anchor="middle" x="50%" y="1em">单轴折线图-示例</tspan>
+            <tspan class="xc-title-subtext" font-size="12" fill="#00" text-anchor="middle" x="50%" dy="1.2em" />
+          </text>
+          <g class="xc-legend-group" transform="translate(447 771)">
+            <g class="xc-legend-item" opacity="1" fill="#000" transform="translate(0)"><text x="22" y="10">
+                <tspan font-size="14">网易</tspan>
+              </text>
+              <rect fill="#2ec7c9" stroke="#2ec7c9" width="18" height="10" rx="2" ry="2" />
+            </g>
+            <g class="xc-legend-item" opacity="1" fill="#000" transform="translate(60)"><text x="22" y="10">
+                <tspan font-size="14">腾讯</tspan>
+              </text>
+              <rect fill="#b6a2de" stroke="#b6a2de" width="18" height="10" rx="2" ry="2" />
+            </g>
+          </g>
+        </svg>
+        <div class="xc-tooltip" style="visibility: hidden; transform: translate(920px, 247px);">
+          <p>周日</p>
+          <p>网易:&nbsp;340</p>
+          <p>腾讯:&nbsp;683</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./examples.js"></script>
+
+</body>
+
+</html>
